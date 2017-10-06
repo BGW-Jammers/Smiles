@@ -1,8 +1,0 @@
-sceneSetups:
-<<<<<<< HEAD
-- path: Assets/Scenes/Dev Scenes/SamScene1.unity
-=======
-- path: Assets/Scenes/Dev Scenes/RubScene1.unity
->>>>>>> bb890d775596f38960d8887c43bff8e54281f309
-  isLoaded: 1
-  isActive: 1
