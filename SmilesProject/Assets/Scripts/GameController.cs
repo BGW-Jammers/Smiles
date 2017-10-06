@@ -8,6 +8,7 @@ public enum GameState
     PLAY,
     TRANSITION_TO_PLAY,
     PAUSE,
+    PAUSE_ON_TEXT,
     TRANSITION_TO_PAUSE,
     END,
     MENU
@@ -63,6 +64,12 @@ public class GameController : MonoBehaviour
 
                     break;
                 }
+            case GameState.PAUSE_ON_TEXT:
+                {
+                    DisableMovement();
+
+                    break;
+                }
             case GameState.TRANSITION_TO_PAUSE:
                 {
                     if (tickSkipped)
@@ -74,6 +81,12 @@ public class GameController : MonoBehaviour
                 }
             default: return;
         }
+    }
+
+    bool DisableMovement()
+    {
+
+        return true;
     }
 
     void OnTriggerEnter(Collider other)
