@@ -32,3 +32,12 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+SmilesProject/Library/assetDatabase3
+*.mat
+SmilesProject/Library/assetDatabase3
+SmilesProject/Library/CurrentLayout.dwlt
+SmilesProject/Library/LastSceneManagerSetup.txt
+SmilesProject/Library/metadata/8e/8ea429aff47c0e04183b9bc65035e8bf.info
+SmilesProject/Library/metadata/8e/8ea429aff47c0e04183b9bc65035e8bf
+SmilesProject/Assets/3rd Party Assets/sample 1.mat.meta
+SmilesProject/Assets/3rd Party Assets/sample 1.mat
