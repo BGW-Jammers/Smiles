@@ -113,11 +113,38 @@ public class Character : MonoBehaviour
                 if (tmp == "0")
                 {
                     System.Array.Reverse(Map.jagged);
-                    Map.jagged2[positionY][positionX] = "z";
-                    System.Array.Reverse(Map.jagged);
+
+                    
+
+                    Map.jagged[positionY][positionX] = "0";
+
+                    System.Array.Reverse(Map.jagged2);
+                    Map.jagged2[positionY][positionX] = "1";
+                  
+                    System.Array.Reverse(Map.jagged2);
+                    System.Array.Reverse(Map.jagged); 
+                    Debug.Log(Map.jagged2[positionY][positionX]);
+
+                    Map.DestroyCurrentWorld();
+                    Map.CreateWorld_1(Map.jagged2);
+                    
                 }
             }
         }
+
+        string tmp2 = "";
+            System.Array.Reverse(Map.jagged);
+            tmp2 = Map.jagged[positionY][positionX];
+            System.Array.Reverse(Map.jagged);
+
+        if (tmp2 == "e")
+        {
+            //WIN CONDITION
+            Debug.Log("win!");
+        }
+
+
+
         // STATES
         switch (currentAction)
         {
@@ -203,6 +230,9 @@ public class Character : MonoBehaviour
                     break;
                 }
         }
+
+    
+
     }
 
     void GetTileInternalDistance()
