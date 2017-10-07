@@ -16,6 +16,7 @@ public class Character : MonoBehaviour
 {
     Mini_Game_Level_Loader Map = null;
     Animator Anim = null;
+    SpriteRenderer Sprite = null;
 
     public CharacterState currentAction;
 
@@ -35,6 +36,8 @@ public class Character : MonoBehaviour
         Anim = GetComponent<Animator>();
         Map = GameObject.Find("GameManager").GetComponent<Mini_Game_Level_Loader>();
         transform.position = GameObject.Find("StartTile").transform.position;
+        Sprite = GetComponent<SpriteRenderer>();
+
 
         positionX = 0;
         positionY = 4;
@@ -169,6 +172,11 @@ public class Character : MonoBehaviour
                         Anim.SetBool("Walking_Right", false);
                         Anim.SetBool("Walking_Left", false);
                     }
+                    if (Anim.GetCurrentAnimatorStateInfo(0).IsName("Walking Top"))
+                    {
+                        Sprite.flipX = false;
+                    }
+
                     MoveTo(0, 1);
                     if (!isMoving)
                     {
@@ -189,6 +197,11 @@ public class Character : MonoBehaviour
                         Anim.SetBool("Walking_Right", false);
                         Anim.SetBool("Walking_Left", false);
                     }
+                    if (Anim.GetCurrentAnimatorStateInfo(0).IsName("Walking Bot"))
+                    {
+                        Sprite.flipX = false;
+                    }
+
                     MoveTo(0, -1);
                     if (!isMoving)
                     {
@@ -209,6 +222,11 @@ public class Character : MonoBehaviour
                         Anim.SetBool("Walking_Right", false);
                         Anim.SetBool("Walking_Bot", false);
                     }
+                    if (Anim.GetCurrentAnimatorStateInfo(0).IsName("Walking Left"))
+                    {
+                        Sprite.flipX = false;
+                    }
+
                     MoveTo(-1, 0);
 
                     break;
@@ -224,6 +242,7 @@ public class Character : MonoBehaviour
                         Anim.SetBool("Walking_Top", false);
                         Anim.SetBool("Walking_Bot", false);
                         Anim.SetBool("Walking_Left", false);
+                        Sprite.flipX = true;
                     }
 
                     MoveTo(1, 0);
