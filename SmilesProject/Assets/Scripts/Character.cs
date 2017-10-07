@@ -25,6 +25,13 @@ public class Character : MonoBehaviour
     public int floor = 0;
     public int speed = 1;
 
+    //BOMB
+    public float timeToBreak = 10000;
+    public float timebreak = 2;
+    private bool isTicking = false;
+    int cachedX = 0;
+    int cachedY = 0;
+
     float tileInternalDistance = 0.0f;
     bool isMoving = false;
 
@@ -104,7 +111,7 @@ public class Character : MonoBehaviour
 
                 if (tmp == "0")
                 {
-                    Map.CreateBomb(positionY, positionX);
+                    
                 }
             }
             if (floor == 1)
@@ -117,13 +124,21 @@ public class Character : MonoBehaviour
                 {
                     System.Array.Reverse(Map.jagged);
 
-                    
-
                     Map.jagged[positionY][positionX] = "0";
 
                     System.Array.Reverse(Map.jagged2);
-                    Map.jagged2[positionY][positionX] = "1";
-                  
+
+                    if (!isTicking)
+                    {
+                        timeToBreak = timebreak;
+                        isTicking = true;
+                    }
+
+                    Map.jagged2[positionY][positionX] = "z";
+
+                    cachedX = positionX;
+                    cachedY = positionY;
+
                     System.Array.Reverse(Map.jagged2);
                     System.Array.Reverse(Map.jagged); 
                     Debug.Log(Map.jagged2[positionY][positionX]);
@@ -134,6 +149,18 @@ public class Character : MonoBehaviour
                 }
             }
         }
+
+        timeToBreak -= Time.deltaTime;
+        if (timeToBreak < 0)
+        {
+            
+            Map.jagged2[cachedX][cachedY] = "1";
+           
+            timeToBreak = timebreak;
+            isTicking = false;
+        }
+
+
 
         string tmp2 = "";
             System.Array.Reverse(Map.jagged);
