@@ -266,6 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0a62ea5accfbc04e8c43deba98ca769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CURRENT_LEVEL: 1
   player: {fileID: 0}
   blackTile: {fileID: 1266593227585564, guid: 9cf88c91ae8968d42a49a0d5f7a6712e, type: 2}
   whiteTile: {fileID: 1806552423164184, guid: 9a0bcc24a4431374abeb7f944fa2cbd1, type: 2}
