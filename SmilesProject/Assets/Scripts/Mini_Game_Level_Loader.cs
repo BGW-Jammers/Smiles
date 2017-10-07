@@ -42,7 +42,7 @@ public class Mini_Game_Level_Loader : MonoBehaviour
 
     private bool areWeUpstairs = false;
 
-    void Start()
+    void Awake()
     {
         jagged = readFile("Assets/level1.txt");
         jagged2 = readFile("Assets/level1_upFloor.txt");
@@ -56,7 +56,7 @@ public class Mini_Game_Level_Loader : MonoBehaviour
         if (GameObject.Find("Character").GetComponent<Character>().floor == 1 && !areWeUpstairs)
         {
             DestroyCurrentWorld();
-            jagged = CreateWorld_1(jagged2);
+            jagged2 = CreateWorld_1(jagged2);
             areWeUpstairs = true;
         }
 
@@ -68,7 +68,7 @@ public class Mini_Game_Level_Loader : MonoBehaviour
         }
     }
 
-    string[][] CreateWorld_1(string[][] jagged)
+    public string[][] CreateWorld_1(string[][] jagged)
     {
         GameObject tmp = null;
         GameObject parent = new GameObject("World");
@@ -150,7 +150,7 @@ public class Mini_Game_Level_Loader : MonoBehaviour
         return jagged;
     }
 
-    void DestroyCurrentWorld()
+    public void DestroyCurrentWorld()
     {
         Destroy(GameObject.Find("World"));
     }
@@ -173,10 +173,10 @@ public class Mini_Game_Level_Loader : MonoBehaviour
 
     public void CreateBomb(int positionY, int positionX)
     {
-
         System.Array.Reverse(jagged);
         jagged[positionY][positionX] = "z";
-        currentWorld[positionY, positionX] = Instantiate(bombActive, new Vector3(positionY, -positionX, 0), Quaternion.identity, GameObject.Find("World").transform); ;
+        currentWorld[positionY, positionX] = Instantiate(bombActive, new Vector3(positionY, -positionX, 0), Quaternion.identity, GameObject.Find("World").transform);
         System.Array.Reverse(jagged);
+        Debug.Log("bomb");
     }
 }
