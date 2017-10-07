@@ -20,6 +20,8 @@ public class Character : MonoBehaviour
 
     public CharacterState currentAction;
 
+    public int bombNumber = 6;
+
     public int positionX = 0;
     public int positionY = 4;
     public int floor = 0;
@@ -102,11 +104,14 @@ public class Character : MonoBehaviour
         // LEFT
         else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
-            if (IsWalkable(-1, 0))
+            if (positionX != 0)
             {
-                if (currentAction == CharacterState.IDLE)
+                if (IsWalkable(-1, 0))
                 {
-                    currentAction = CharacterState.WALKING_LEFT;
+                    if (currentAction == CharacterState.IDLE)
+                    {
+                        currentAction = CharacterState.WALKING_LEFT;
+                    }
                 }
             }
         }
@@ -122,7 +127,7 @@ public class Character : MonoBehaviour
 
                 if (tmp == "0")
                 {
-                    
+
                 }
             }
             if (floor == 1)
@@ -140,110 +145,32 @@ public class Character : MonoBehaviour
                         Map.jagged[positionY][positionX] = "3";
                     System.Array.Reverse(Map.jagged);
 
-
-                    if (!isTicking1)
-                    {
-                        timeToBreak1 = timebreak1;
-                        isTicking1 = true;
-
-                        cachedX1 = positionY;
-                        cachedY1 = positionX;
-                    }
-                    else if (!isTicking2)
-                    {
-                        timeToBreak2 = timebreak2;
-                        isTicking2 = true;
-
-                        cachedX2 = positionY;
-                        cachedY2 = positionX;
-                    }
-                    else if (!isTicking3)
-                    {
-                        timeToBreak3 = timebreak3;
-                        isTicking3 = true;
-
-                        cachedX3 = positionY;
-                        cachedY3 = positionX;
-                    }
+                    HardcodedSolution();
 
                     System.Array.Reverse(Map.jagged2);
                     Map.jagged2[positionY][positionX] = "z";
                     System.Array.Reverse(Map.jagged2);
-
-                                        
+                    
 
                     Map.DestroyCurrentWorld();
                     Map.CreateWorld_1(Map.jagged2);
-                    
                 }
             }
         }
 
-        timeToBreak1 -= Time.deltaTime;
-        if (timeToBreak1 < 0)
-        {
-            System.Array.Reverse(Map.jagged2);
-            Map.jagged2[cachedX1][cachedY1] = "1";
-            System.Array.Reverse(Map.jagged2);
-
-            if (floor == 1)
-            {
-                Map.DestroyCurrentWorld();
-                Map.CreateWorld_1(Map.jagged2);
-            }
-
-            timeToBreak1 = timebreak1;
-            isTicking1 = false;
-        }
-
-        timeToBreak2 -= Time.deltaTime;
-        if (timeToBreak2 < 0)
-        {
-            System.Array.Reverse(Map.jagged2);
-            Map.jagged2[cachedX2][cachedY2] = "1";
-            System.Array.Reverse(Map.jagged2);
-
-            if (floor == 1)
-            {
-                Map.DestroyCurrentWorld();
-                Map.CreateWorld_1(Map.jagged2);
-            }
-
-            timeToBreak2 = timebreak2;
-            isTicking2 = false;
-        }
-
-        timeToBreak3 -= Time.deltaTime;
-        if (timeToBreak3 < 0)
-        {
-            System.Array.Reverse(Map.jagged2);
-            Map.jagged2[cachedX3][cachedY3] = "1";
-            System.Array.Reverse(Map.jagged2);
-
-            if (floor == 1)
-            {
-                Map.DestroyCurrentWorld();
-                Map.CreateWorld_1(Map.jagged2);
-            }
-
-            timeToBreak3 = timebreak1;
-            isTicking1 = false;
-        }
-
-
+        HardcodedResolution();
 
         string tmp2 = "";
-            System.Array.Reverse(Map.jagged);
-            tmp2 = Map.jagged[positionY][positionX];
-            System.Array.Reverse(Map.jagged);
+        System.Array.Reverse(Map.jagged);
+        tmp2 = Map.jagged[positionY][positionX];
+        System.Array.Reverse(Map.jagged);
 
         if (tmp2 == "e")
         {
             //WIN CONDITION
+            GameObject.Find("GameManager").GetComponent<Mini_Game_Level_Loader>().CURRENT_LEVEL++;
             Debug.Log("win!");
         }
-
-
 
         // STATES
         switch (currentAction)
@@ -346,9 +273,6 @@ public class Character : MonoBehaviour
                     break;
                 }
         }
-
-    
-
     }
 
     void GetTileInternalDistance()
@@ -440,5 +364,87 @@ public class Character : MonoBehaviour
                         }
         }
         return false;
+    }
+
+    void HardcodedSolution()
+    {
+        if (!isTicking1)
+        {
+            timeToBreak1 = timebreak1;
+            isTicking1 = true;
+
+            cachedX1 = positionY;
+            cachedY1 = positionX;
+        }
+        else if (!isTicking2)
+        {
+            timeToBreak2 = timebreak2;
+            isTicking2 = true;
+
+            cachedX2 = positionY;
+            cachedY2 = positionX;
+        }
+        else if (!isTicking3)
+        {
+            timeToBreak3 = timebreak3;
+            isTicking3 = true;
+
+            cachedX3 = positionY;
+            cachedY3 = positionX;
+        }
+    }
+
+    void HardcodedResolution()
+    {
+        timeToBreak1 -= Time.deltaTime;
+        if (timeToBreak1 < 0)
+        {
+            System.Array.Reverse(Map.jagged2);
+            Map.jagged2[cachedX1][cachedY1] = "1";
+            System.Array.Reverse(Map.jagged2);
+
+            if (floor == 1)
+            {
+                Map.DestroyCurrentWorld();
+                Map.CreateWorld_1(Map.jagged2);
+            }
+
+            timeToBreak1 = timebreak1;
+            isTicking1 = false;
+        }
+
+        timeToBreak2 -= Time.deltaTime;
+        if (timeToBreak2 < 0)
+        {
+            System.Array.Reverse(Map.jagged2);
+            Map.jagged2[cachedX2][cachedY2] = "1";
+            System.Array.Reverse(Map.jagged2);
+
+            if (floor == 1)
+            {
+                Map.DestroyCurrentWorld();
+                Map.CreateWorld_1(Map.jagged2);
+            }
+
+            timeToBreak2 = timebreak2;
+            isTicking2 = false;
+        }
+
+        timeToBreak3 -= Time.deltaTime;
+        if (timeToBreak3 < 0)
+        {
+            System.Array.Reverse(Map.jagged2);
+            Map.jagged2[cachedX3][cachedY3] = "1";
+            System.Array.Reverse(Map.jagged2);
+
+            if (floor == 1)
+            {
+                Map.DestroyCurrentWorld();
+                Map.CreateWorld_1(Map.jagged2);
+            }
+
+            timeToBreak3 = timebreak1;
+            isTicking1 = false;
+        }
     }
 }

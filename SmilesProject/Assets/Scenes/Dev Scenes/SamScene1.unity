@@ -233,7 +233,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1374099860}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.87, y: 0, z: -10}
+  m_LocalPosition: {x: 6.5, y: -4, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -279,6 +279,7 @@ MonoBehaviour:
   bombActive: {fileID: 1486677739847644, guid: fd65b7bdc0822ba43b3f6c9992ee02d4, type: 2}
   bombDeactive: {fileID: 1486677739847644, guid: 7917ab81d1d6892428ba435bbc807c52,
     type: 2}
+  obstacleTile: {fileID: 0}
 --- !u!4 &1636861046
 Transform:
   m_ObjectHideFlags: 0

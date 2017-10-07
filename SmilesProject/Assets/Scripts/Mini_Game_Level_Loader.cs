@@ -5,10 +5,9 @@ using System.Text.RegularExpressions;
 
 public class Mini_Game_Level_Loader : MonoBehaviour
 {
+    public int CURRENT_LEVEL = 1;
     public GameObject player;
    
-
-    private List<GameObject> tiles_first_floor_level_1;
     public GameObject blackTile;
     public GameObject whiteTile;
     public GameObject beginTile;
@@ -20,9 +19,6 @@ public class Mini_Game_Level_Loader : MonoBehaviour
     public GameObject bombActive;
     public GameObject bombDeactive;
     public GameObject obstacleTile;
-
-
-    //Codi de prova
 
     public const string floor_white = "0";
     public const string floor_black = "1";
@@ -46,6 +42,7 @@ public class Mini_Game_Level_Loader : MonoBehaviour
 
     void Awake()
     {
+        CURRENT_LEVEL = 1;
         jagged = readFile("Assets/level1.txt");
         jagged2 = readFile("Assets/level1_upFloor.txt");
         jagged = CreateWorld_1(jagged);
@@ -77,6 +74,26 @@ public class Mini_Game_Level_Loader : MonoBehaviour
             per.transform.position = GameObject.Find("UpperStairTile").transform.position;
             per.GetComponent<Character>().positionX = 0;
             per.GetComponent<Character>().positionY = 4;
+        }
+    }
+
+    void LevelSelector()
+    {
+        if (CURRENT_LEVEL == 1)
+        {
+            jagged = readFile("Assets/level1.txt");
+            jagged2 = readFile("Assets/level1_upFloor.txt");
+        }
+        if (CURRENT_LEVEL == 2)
+        {
+
+            //jagged = readFile("Assets/level1.txt");
+            //jagged2 = readFile("Assets/level1_upFloor.txt");
+        }
+        if (CURRENT_LEVEL == 3)
+        {
+            //jagged = readFile("Assets/level1.txt");
+            //jagged2 = readFile("Assets/level1_upFloor.txt");
         }
     }
 
@@ -171,6 +188,7 @@ public class Mini_Game_Level_Loader : MonoBehaviour
     public void DestroyCurrentWorld()
     {
         Destroy(GameObject.Find("World"));
+        LevelSelector();
     }
 
     string[][] readFile(string file)
