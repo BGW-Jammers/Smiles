@@ -42,9 +42,8 @@ public class Mini_Game_Level_Loader : MonoBehaviour
 
     void Awake()
     {
-        CURRENT_LEVEL = 1;
-        jagged = readFile("Assets/level1.txt");
-        jagged2 = readFile("Assets/level1_upFloor.txt");
+        CURRENT_LEVEL = 3;
+        LevelSelector();
         jagged = CreateWorld_1(jagged);
         areWeUpstairs = false;
     }
@@ -84,16 +83,16 @@ public class Mini_Game_Level_Loader : MonoBehaviour
             jagged = readFile("Assets/level1.txt");
             jagged2 = readFile("Assets/level1_upFloor.txt");
         }
-        if (CURRENT_LEVEL == 2)
+        else if (CURRENT_LEVEL == 2)
         {
 
             //jagged = readFile("Assets/level1.txt");
             //jagged2 = readFile("Assets/level1_upFloor.txt");
         }
-        if (CURRENT_LEVEL == 3)
+        else if (CURRENT_LEVEL == 3)
         {
-            //jagged = readFile("Assets/level1.txt");
-            //jagged2 = readFile("Assets/level1_upFloor.txt");
+            jagged = readFile("Assets/level3.txt");
+            jagged2 = readFile("Assets/level3_upFloor.txt");
         }
     }
 
