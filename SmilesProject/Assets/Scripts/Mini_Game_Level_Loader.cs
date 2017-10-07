@@ -58,9 +58,9 @@ public class Mini_Game_Level_Loader : MonoBehaviour
             areWeUpstairs = true;
 
             GameObject per = GameObject.Find("Character");
-            per.transform.position = GameObject.Find("StartTile").transform.position;
+            per.transform.position = (GameObject.Find("StartTile").transform.position - new Vector3(0,1,0));
             per.GetComponent<Character>().positionX = 0;
-            per.GetComponent<Character>().positionY = 4;
+            per.GetComponent<Character>().positionY = 3;
         }
 
         if (GameObject.Find("Character").GetComponent<Character>().floor == 0 && areWeUpstairs)
@@ -70,9 +70,9 @@ public class Mini_Game_Level_Loader : MonoBehaviour
             areWeUpstairs = false;
 
             GameObject per = GameObject.Find("Character");
-            per.transform.position = GameObject.Find("UpperStairTile").transform.position;
+            per.transform.position = (GameObject.Find("UpperStairTile").transform.position + new Vector3(0, 1, 0));
             per.GetComponent<Character>().positionX = 0;
-            per.GetComponent<Character>().positionY = 4;
+            per.GetComponent<Character>().positionY = 5;
         }
     }
 
@@ -85,9 +85,8 @@ public class Mini_Game_Level_Loader : MonoBehaviour
         }
         else if (CURRENT_LEVEL == 2)
         {
-
-            //jagged = readFile("Assets/level1.txt");
-            //jagged2 = readFile("Assets/level1_upFloor.txt");
+            jagged = readFile("Assets/level2.txt");
+            jagged2 = readFile("Assets/level2_upFloor.txt");
         }
         else if (CURRENT_LEVEL == 3)
         {
@@ -187,7 +186,6 @@ public class Mini_Game_Level_Loader : MonoBehaviour
     public void DestroyCurrentWorld()
     {
         Destroy(GameObject.Find("World"));
-        LevelSelector();
     }
 
     string[][] readFile(string file)

@@ -116,7 +116,7 @@ public class Character : MonoBehaviour
             }
         }
         // SPACE
-        else if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             string tmp = "";
             if (floor == 0)
@@ -140,9 +140,13 @@ public class Character : MonoBehaviour
                 {
                     System.Array.Reverse(Map.jagged);
                     if (Map.jagged[positionY][positionX] == "1")
+                    {
                         Map.jagged[positionY][positionX] = "0";
-                    if (Map.jagged[positionY][positionX] == "0")
+                    }
+                    else if (Map.jagged[positionY][positionX] == "0")
+                    {
                         Map.jagged[positionY][positionX] = "3";
+                    }
                     System.Array.Reverse(Map.jagged);
 
                     HardcodedSolution();
@@ -204,7 +208,7 @@ public class Character : MonoBehaviour
                     MoveTo(0, 1);
                     if (!isMoving)
                     {
-                        if (floor == 0 && positionX == 0 && positionY == 7)
+                        if (floor == 0 && positionX == 0 && positionY == 6)
                             floor = 1;
                     }
                     break;
@@ -229,7 +233,7 @@ public class Character : MonoBehaviour
                     MoveTo(0, -1);
                     if (!isMoving)
                     {
-                        if (floor == 1 && positionX == 0 && positionY == 1)
+                        if (floor == 1 && positionX == 0 && positionY == 2)
                             floor = 0;
                     }
                     break;
