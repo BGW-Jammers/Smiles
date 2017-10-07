@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114741207767882418}
   - component: {fileID: 114672555899518444}
   m_Layer: 5
-  m_Name: BGW Intro
+  m_Name: BGW Intro 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
