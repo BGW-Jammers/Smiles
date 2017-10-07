@@ -19,6 +19,7 @@ public class Mini_Game_Level_Loader : MonoBehaviour
     public GameObject wallTile;
     public GameObject bombActive;
     public GameObject bombDeactive;
+    public GameObject obstacleTile;
 
 
     //Codi de prova
@@ -34,6 +35,7 @@ public class Mini_Game_Level_Loader : MonoBehaviour
     public const string transition = "x";
     public const string bomb_activated = "z";
     public const string bomb_deactivated = "Z";
+    public const string obstacle = "3";
 
     public string[][] jagged;
     public string[][] jagged2;
@@ -58,6 +60,11 @@ public class Mini_Game_Level_Loader : MonoBehaviour
             DestroyCurrentWorld();
             jagged2 = CreateWorld_1(jagged2);
             areWeUpstairs = true;
+
+            GameObject per = GameObject.Find("Character");
+            per.transform.position = GameObject.Find("StartTile").transform.position;
+            per.GetComponent<Character>().positionX = 0;
+            per.GetComponent<Character>().positionY = 4;
         }
 
         if (GameObject.Find("Character").GetComponent<Character>().floor == 0 && areWeUpstairs)
@@ -65,6 +72,11 @@ public class Mini_Game_Level_Loader : MonoBehaviour
             DestroyCurrentWorld();
             jagged = CreateWorld_1(jagged);
             areWeUpstairs = false;
+
+            GameObject per = GameObject.Find("Character");
+            per.transform.position = GameObject.Find("UpperStairTile").transform.position;
+            per.GetComponent<Character>().positionX = 0;
+            per.GetComponent<Character>().positionY = 4;
         }
     }
 
@@ -107,6 +119,7 @@ public class Mini_Game_Level_Loader : MonoBehaviour
                     case upper_stairs:
                         {
                             tmp = Instantiate(upperStairsTile, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
+                            tmp.name = "UpperStairTile";
                             break;
                         }
                     case exit:
@@ -141,6 +154,11 @@ public class Mini_Game_Level_Loader : MonoBehaviour
                     case bomb_deactivated:
                         {
                             tmp = Instantiate(bombDeactive, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
+                            break;
+                        }
+                    case obstacle:
+                        {
+                            tmp = Instantiate(wallTile, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
                             break;
                         }
                 }

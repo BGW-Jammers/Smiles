@@ -134,7 +134,10 @@ public class Character : MonoBehaviour
                 if (tmp == "0")
                 {
                     System.Array.Reverse(Map.jagged);
-                    Map.jagged[positionY][positionX] = "0";
+                    if (Map.jagged[positionY][positionX] == "1")
+                        Map.jagged[positionY][positionX] = "0";
+                    if (Map.jagged[positionY][positionX] == "0")
+                        Map.jagged[positionY][positionX] = "3";
                     System.Array.Reverse(Map.jagged);
 
 
@@ -299,7 +302,7 @@ public class Character : MonoBehaviour
                     MoveTo(0, -1);
                     if (!isMoving)
                     {
-                        if (floor == 1 && positionX == 0 && positionY == 5)
+                        if (floor == 1 && positionX == 0 && positionY == 1)
                             floor = 0;
                     }
                     break;
@@ -405,7 +408,10 @@ public class Character : MonoBehaviour
                     if (tmp != "x")
                         if (tmp != "w")
                         {
-                            return true;
+                            if (tmp != "3")
+                            {
+                                return true;
+                            }
                         }
         }
         else
@@ -418,7 +424,7 @@ public class Character : MonoBehaviour
             {
                 return false;
             }
-            if ((positionX == 0 && positionY == 5 && tmp == "0"))
+            if ((positionX == 0 && positionY == 3 && tmp == "0") || (positionX == 0 && positionY == 2 && tmp == "0"))
             {
                 return false;
             }
@@ -427,7 +433,10 @@ public class Character : MonoBehaviour
                     if (tmp != "x")
                         if (tmp != "w")
                         {
-                            return true;
+                            if (tmp != "3")
+                            {
+                                return true;
+                            }
                         }
         }
         return false;
