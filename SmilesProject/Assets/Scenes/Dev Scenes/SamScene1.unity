@@ -190,8 +190,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1374099860}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.651472, y: -4.61, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -239,8 +239,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1615039627}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -9.234}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 4, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -336,6 +336,13 @@ MonoBehaviour:
   beginTile: {fileID: 1323196676660442, guid: f668cb22b737141438ec5a6bf3ec8cbc, type: 2}
   exitTile: {fileID: 1561811212015526, guid: 6b6666571d7ddcd4ebff0e38819e7338, type: 2}
   stairsTile: {fileID: 1486677739847644, guid: de5f248d07577c347ac8eca78b4cfc1c, type: 2}
+  upperStairsTile: {fileID: 1486677739847644, guid: ef76e929d3e8970498c370964b85e384,
+    type: 2}
+  voidTile: {fileID: 1486677739847644, guid: 099918d967d60824a81d76d7700a20d4, type: 2}
+  wallTile: {fileID: 1486677739847644, guid: 98cf0fcc61eaf5b4690025fcf510106e, type: 2}
+  bombActive: {fileID: 1486677739847644, guid: fd65b7bdc0822ba43b3f6c9992ee02d4, type: 2}
+  bombDeactive: {fileID: 1486677739847644, guid: 7917ab81d1d6892428ba435bbc807c52,
+    type: 2}
 --- !u!4 &1636861046
 Transform:
   m_ObjectHideFlags: 0

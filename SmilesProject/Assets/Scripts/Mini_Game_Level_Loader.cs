@@ -17,6 +17,8 @@ public class Mini_Game_Level_Loader : MonoBehaviour
     public GameObject upperStairsTile;
     public GameObject voidTile;
     public GameObject wallTile;
+    public GameObject bombActive;
+    public GameObject bombDeactive;
 
 
     //Codi de prova
@@ -30,9 +32,13 @@ public class Mini_Game_Level_Loader : MonoBehaviour
     public const string tile_void = "o";
     public const string wall = "w";
     public const string transition = "x";
+    public const string bomb_activated = "z";
+    public const string bomb_deactivated = "Z";
 
     public string[][] jagged;
     public string[][] jagged2;
+
+    public GameObject[,] currentWorld;
 
     private bool areWeUpstairs = false;
 
@@ -41,7 +47,6 @@ public class Mini_Game_Level_Loader : MonoBehaviour
         jagged = readFile("Assets/level1.txt");
         jagged2 = readFile("Assets/level1_upFloor.txt");
         jagged = CreateWorld_1(jagged);
-
         areWeUpstairs = false;
     }
 
@@ -55,7 +60,7 @@ public class Mini_Game_Level_Loader : MonoBehaviour
             areWeUpstairs = true;
         }
 
-        else if (GameObject.Find("Character").GetComponent<Character>().floor == 0 && areWeUpstairs)
+        if (GameObject.Find("Character").GetComponent<Character>().floor == 0 && areWeUpstairs)
         {
             DestroyCurrentWorld();
             jagged = CreateWorld_1(jagged);
@@ -67,6 +72,7 @@ public class Mini_Game_Level_Loader : MonoBehaviour
     {
         GameObject tmp = null;
         GameObject parent = new GameObject("World");
+        currentWorld = new GameObject[20, 20];
         // create planes based on matrix
         for (int y = 0; y < jagged.Length; y++)
         {
@@ -75,11 +81,16 @@ public class Mini_Game_Level_Loader : MonoBehaviour
                 switch (jagged[y][x])
                 {
                     case floor_white:
-                        Instantiate(whiteTile, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
-                        break;
+                        {
+                            tmp = Instantiate(whiteTile, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
+                            break;
+                        }
+
                     case floor_black:
-                        Instantiate(blackTile, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
-                        break;
+                        {
+                            tmp = Instantiate(blackTile, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
+                            break;
+                        }
 
                     case begin:
                         {
@@ -89,12 +100,13 @@ public class Mini_Game_Level_Loader : MonoBehaviour
                         }
 
                     case stairs:
-                        Instantiate(stairsTile, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
-
-                        break;
+                        {
+                            tmp = Instantiate(stairsTile, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
+                            break;
+                        }
                     case upper_stairs:
                         {
-                            Instantiate(upperStairsTile, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
+                            tmp = Instantiate(upperStairsTile, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
                             break;
                         }
                     case exit:
@@ -106,24 +118,33 @@ public class Mini_Game_Level_Loader : MonoBehaviour
 
                     case wall:
                         {
-                            Instantiate(wallTile, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
+                            tmp = Instantiate(wallTile, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
                             break;
                         }
 
                     case tile_void:
                         {
-                            Instantiate(voidTile, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
+                            tmp = Instantiate(voidTile, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
                             break;
                         }
 
                     case transition:
                         {
-                            Instantiate(voidTile, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
+                            tmp = Instantiate(voidTile, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
                             break;
                         }
-
-
+                    case bomb_activated:
+                        {
+                            tmp = Instantiate(bombActive, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
+                            break;
+                        }
+                    case bomb_deactivated:
+                        {
+                            tmp = Instantiate(bombDeactive, new Vector3(x, -y, 0), Quaternion.identity, parent.transform);
+                            break;
+                        }
                 }
+                currentWorld[y,x] = tmp;
             }
         }
         return jagged;
@@ -150,5 +171,12 @@ public class Mini_Game_Level_Loader : MonoBehaviour
         return levelBase;
     }
 
+    public void CreateBomb(int positionY, int positionX)
+    {
 
+        System.Array.Reverse(jagged);
+        jagged[positionY][positionX] = "z";
+        currentWorld[positionY, positionX] = Instantiate(bombActive, new Vector3(positionY, -positionX, 0), Quaternion.identity, GameObject.Find("World").transform); ;
+        System.Array.Reverse(jagged);
+    }
 }

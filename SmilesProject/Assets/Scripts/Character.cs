@@ -33,8 +33,8 @@ public class Character : MonoBehaviour
     void Start()
     {
         Anim = GetComponent<Animator>();
-        transform.position = GameObject.Find("StartTile").transform.position;
         Map = GameObject.Find("GameManager").GetComponent<Mini_Game_Level_Loader>();
+        transform.position = GameObject.Find("StartTile").transform.position;
 
         positionX = 0;
         positionY = 4;
@@ -46,7 +46,7 @@ public class Character : MonoBehaviour
     void Update()
     {
         // UP
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
             if (IsWalkable(0, 1))
             {
@@ -57,7 +57,7 @@ public class Character : MonoBehaviour
             }
         }
         // DOWN
-        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
             if (IsWalkable(0, -1))
             {
@@ -68,7 +68,7 @@ public class Character : MonoBehaviour
             }
         }
         // RIGHT
-        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             if (IsWalkable(1, 0))
             {
@@ -79,7 +79,7 @@ public class Character : MonoBehaviour
             }
         }
         // LEFT
-        else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
             if (IsWalkable(-1, 0))
             {
@@ -89,7 +89,35 @@ public class Character : MonoBehaviour
                 }
             }
         }
+        // SPACE
+        else if (Input.GetKeyDown(KeyCode.Space))
+        {
+            string tmp = "";
+            if (floor == 0)
+            {
+                System.Array.Reverse(Map.jagged);
+                tmp = Map.jagged[positionY][positionX];
+                System.Array.Reverse(Map.jagged);
 
+                if (tmp == "0")
+                {
+                    Map.CreateBomb(positionY, positionX);
+                }
+            }
+            if (floor == 1)
+            {
+                System.Array.Reverse(Map.jagged);
+                tmp = Map.jagged2[positionY][positionX];
+                System.Array.Reverse(Map.jagged);
+
+                if (tmp == "0")
+                {
+                    System.Array.Reverse(Map.jagged);
+                    Map.jagged2[positionY][positionX] = "z";
+                    System.Array.Reverse(Map.jagged);
+                }
+            }
+        }
         // STATES
         switch (currentAction)
         {
@@ -110,11 +138,14 @@ public class Character : MonoBehaviour
 
                         isMoving = true;
                         Anim.SetBool("Walking_Top", true);
+                        Anim.SetBool("Walking_Bot", false);
+                        Anim.SetBool("Walking_Right", false);
+                        Anim.SetBool("Walking_Left", false);
                     }
                     MoveTo(0, 1);
                     if (!isMoving)
                     {
-                        if (floor == 0 && positionX == 0 && positionY == 6)
+                        if (floor == 0 && positionX == 0 && positionY == 7)
                             floor = 1;
                     }
                     break;
@@ -127,8 +158,16 @@ public class Character : MonoBehaviour
 
                         isMoving = true;
                         Anim.SetBool("Walking_Bot", true);
+                        Anim.SetBool("Walking_Top", false);
+                        Anim.SetBool("Walking_Right", false);
+                        Anim.SetBool("Walking_Left", false);
                     }
                     MoveTo(0, -1);
+                    if (!isMoving)
+                    {
+                        if (floor == 1 && positionX == 0 && positionY == 4)
+                            floor = 0;
+                    }
                     break;
                 }
             case CharacterState.WALKING_LEFT:
@@ -139,6 +178,9 @@ public class Character : MonoBehaviour
 
                         isMoving = true;
                         Anim.SetBool("Walking_Left", true);
+                        Anim.SetBool("Walking_Top", false);
+                        Anim.SetBool("Walking_Right", false);
+                        Anim.SetBool("Walking_Bot", false);
                     }
                     MoveTo(-1, 0);
 
@@ -152,6 +194,9 @@ public class Character : MonoBehaviour
 
                         isMoving = true;
                         Anim.SetBool("Walking_Right", true);
+                        Anim.SetBool("Walking_Top", false);
+                        Anim.SetBool("Walking_Bot", false);
+                        Anim.SetBool("Walking_Left", false);
                     }
 
                     MoveTo(1, 0);
@@ -195,9 +240,13 @@ public class Character : MonoBehaviour
 
     bool IsWalkable(int additionalY, int additionalX)
     {
+
         if (floor == 0)
         {
+            System.Array.Reverse(Map.jagged);
             string tmp = Map.jagged[positionY + additionalX][positionX + additionalY];
+            System.Array.Reverse(Map.jagged);
+
             Debug.Log(tmp);
             if (tmp != "1")// || tmp != "o"|| tmp != "x" || tmp != "w")// || (tmp == "s" && positionX != 0))
                 if (tmp != "o")
@@ -209,7 +258,9 @@ public class Character : MonoBehaviour
         }
         else
         {
+            System.Array.Reverse(Map.jagged2);
             string tmp = Map.jagged2[positionY + additionalX][positionX + additionalY];
+            System.Array.Reverse(Map.jagged2);
 
             if (tmp != "1")
                 if (tmp != "o")
