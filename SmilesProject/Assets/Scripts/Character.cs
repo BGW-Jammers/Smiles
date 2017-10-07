@@ -23,14 +23,26 @@ public class Character : MonoBehaviour
     public int positionX = 0;
     public int positionY = 4;
     public int floor = 0;
-    public int speed = 1;
+    public float speed = 1.0f;
 
-    //BOMB
-    public float timeToBreak = 10000;
-    public float timebreak = 2;
-    private bool isTicking = false;
-    int cachedX = 0;
-    int cachedY = 0;
+    //BOMB 1
+    public float timeToBreak1 = 10000;
+    public float timebreak1 = 2;
+    private bool isTicking1 = false;
+    int cachedX1;
+    int cachedY1;
+    //BOMB 2
+    public float timeToBreak2 = 10000;
+    public float timebreak2 = 2;
+    private bool isTicking2 = false;
+    int cachedX2;
+    int cachedY2;
+    //BOMB 3
+    public float timeToBreak3 = 10000;
+    public float timebreak3 = 2;
+    private bool isTicking3 = false;
+    int cachedX3;
+    int cachedY3;
 
     float tileInternalDistance = 0.0f;
     bool isMoving = false;
@@ -44,8 +56,7 @@ public class Character : MonoBehaviour
         Map = GameObject.Find("GameManager").GetComponent<Mini_Game_Level_Loader>();
         transform.position = GameObject.Find("StartTile").transform.position;
         Sprite = GetComponent<SpriteRenderer>();
-
-
+        
         positionX = 0;
         positionY = 4;
 
@@ -123,25 +134,40 @@ public class Character : MonoBehaviour
                 if (tmp == "0")
                 {
                     System.Array.Reverse(Map.jagged);
-
                     Map.jagged[positionY][positionX] = "0";
+                    System.Array.Reverse(Map.jagged);
 
-                    System.Array.Reverse(Map.jagged2);
 
-                    if (!isTicking)
+                    if (!isTicking1)
                     {
-                        timeToBreak = timebreak;
-                        isTicking = true;
+                        timeToBreak1 = timebreak1;
+                        isTicking1 = true;
+
+                        cachedX1 = positionY;
+                        cachedY1 = positionX;
+                    }
+                    else if (!isTicking2)
+                    {
+                        timeToBreak2 = timebreak2;
+                        isTicking2 = true;
+
+                        cachedX2 = positionY;
+                        cachedY2 = positionX;
+                    }
+                    else if (!isTicking3)
+                    {
+                        timeToBreak3 = timebreak3;
+                        isTicking3 = true;
+
+                        cachedX3 = positionY;
+                        cachedY3 = positionX;
                     }
 
-                    Map.jagged2[positionY][positionX] = "z";
-
-                    cachedX = positionX;
-                    cachedY = positionY;
-
                     System.Array.Reverse(Map.jagged2);
-                    System.Array.Reverse(Map.jagged); 
-                    Debug.Log(Map.jagged2[positionY][positionX]);
+                    Map.jagged2[positionY][positionX] = "z";
+                    System.Array.Reverse(Map.jagged2);
+
+                                        
 
                     Map.DestroyCurrentWorld();
                     Map.CreateWorld_1(Map.jagged2);
@@ -150,14 +176,55 @@ public class Character : MonoBehaviour
             }
         }
 
-        timeToBreak -= Time.deltaTime;
-        if (timeToBreak < 0)
+        timeToBreak1 -= Time.deltaTime;
+        if (timeToBreak1 < 0)
         {
-            
-            Map.jagged2[cachedX][cachedY] = "1";
-           
-            timeToBreak = timebreak;
-            isTicking = false;
+            System.Array.Reverse(Map.jagged2);
+            Map.jagged2[cachedX1][cachedY1] = "1";
+            System.Array.Reverse(Map.jagged2);
+
+            if (floor == 1)
+            {
+                Map.DestroyCurrentWorld();
+                Map.CreateWorld_1(Map.jagged2);
+            }
+
+            timeToBreak1 = timebreak1;
+            isTicking1 = false;
+        }
+
+        timeToBreak2 -= Time.deltaTime;
+        if (timeToBreak2 < 0)
+        {
+            System.Array.Reverse(Map.jagged2);
+            Map.jagged2[cachedX2][cachedY2] = "1";
+            System.Array.Reverse(Map.jagged2);
+
+            if (floor == 1)
+            {
+                Map.DestroyCurrentWorld();
+                Map.CreateWorld_1(Map.jagged2);
+            }
+
+            timeToBreak2 = timebreak2;
+            isTicking2 = false;
+        }
+
+        timeToBreak3 -= Time.deltaTime;
+        if (timeToBreak3 < 0)
+        {
+            System.Array.Reverse(Map.jagged2);
+            Map.jagged2[cachedX3][cachedY3] = "1";
+            System.Array.Reverse(Map.jagged2);
+
+            if (floor == 1)
+            {
+                Map.DestroyCurrentWorld();
+                Map.CreateWorld_1(Map.jagged2);
+            }
+
+            timeToBreak3 = timebreak1;
+            isTicking1 = false;
         }
 
 
@@ -232,7 +299,7 @@ public class Character : MonoBehaviour
                     MoveTo(0, -1);
                     if (!isMoving)
                     {
-                        if (floor == 1 && positionX == 0 && positionY == 4)
+                        if (floor == 1 && positionX == 0 && positionY == 5)
                             floor = 0;
                     }
                     break;
@@ -324,7 +391,16 @@ public class Character : MonoBehaviour
             System.Array.Reverse(Map.jagged);
 
             Debug.Log(tmp);
-            if (tmp != "1")// || tmp != "o"|| tmp != "x" || tmp != "w")// || (tmp == "s" && positionX != 0))
+            // From Ground to Stairs
+            if ((tmp == "s" && positionX == 1) || (tmp == "v" && positionX == 1))
+            {
+                return false;
+            }
+            if ((positionX == 0 && positionY == 5 && tmp == "0") || (positionX == 0 && positionY == 6 && tmp == "0"))
+            {
+                return false;
+            }
+            if (tmp != "1")
                 if (tmp != "o")
                     if (tmp != "x")
                         if (tmp != "w")
@@ -338,6 +414,14 @@ public class Character : MonoBehaviour
             string tmp = Map.jagged2[positionY + additionalX][positionX + additionalY];
             System.Array.Reverse(Map.jagged2);
 
+            if ((tmp == "s" && positionX == 1) || (tmp == "b" && positionX == 1))
+            {
+                return false;
+            }
+            if ((positionX == 0 && positionY == 5 && tmp == "0"))
+            {
+                return false;
+            }
             if (tmp != "1")
                 if (tmp != "o")
                     if (tmp != "x")
